@@ -53,16 +53,18 @@
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/slides/04-manipulacao.html'>slides/04-manipulacao.html</a>                 |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/slides/05-ggplot2.html'>slides/05-ggplot2.html</a>                         |
 
-| Exemplos |
-| :------- |
+| Exemplos                                                                                                                          |
+| :-------------------------------------------------------------------------------------------------------------------------------- |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/01-introducao-ao-R.R'>exemplos/01-introducao-ao-R.R</a> |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/02-importacao.R'>exemplos/02-importacao.R</a>           |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/03-manipulacao.R'>exemplos/03-manipulacao.R</a>         |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/04-ggplot2.R'>exemplos/04-ggplot2.R</a>                 |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/05-rmarkdown.Rmd'>exemplos/05-rmarkdown.Rmd</a>         |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/06-flexdashboard.Rmd'>exemplos/06-flexdashboard.Rmd</a> |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/dicas_rapidas.R'>exemplos/dicas\_rapidas.R</a>          |
 
-| Scripts feitos em aula                                                                                                                               |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a href='https://curso-r.github.io/202006-intro-ml/scripts_feitos_em_aula/01-tidymodels.R'>scripts\_feitos\_em\_aula/01-tidymodels.R</a>             |
-| <a href='https://curso-r.github.io/202006-intro-ml/scripts_feitos_em_aula/02-overfitting.R'>scripts\_feitos\_em\_aula/02-overfitting.R</a>           |
-| <a href='https://curso-r.github.io/202006-intro-ml/scripts_feitos_em_aula/03-cross-validation.R'>scripts\_feitos\_em\_aula/03-cross-validation.R</a> |
-| <a href='https://curso-r.github.io/202006-intro-ml/scripts_feitos_em_aula/05-regressao-linear.R'>scripts\_feitos\_em\_aula/05-regressao-linear.R</a> |
-| <a href='https://curso-r.github.io/202006-intro-ml/scripts_feitos_em_aula/99-ignorar.R'>scripts\_feitos\_em\_aula/99-ignorar.R</a>                   |
+| Scripts feitos em aula |
+| :--------------------- |
 
 | Exercícios                                                                                                                                                    |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
