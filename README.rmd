@@ -1,0 +1,127 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+<!-- ## Configuração inicial -->
+
+
+<!-- #### Passo 1: Instalar pacotes -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- install.packages("remotes") -->
+
+<!-- # instalar pacotes com bases de dados -->
+<!-- remotes::install_github("curso-r/basesCursoR") -->
+
+<!-- # instalar pacote da Curso-R -->
+<!-- remotes::install_github("curso-r/CursoR") -->
+
+<!-- # instalar pacotes que vamos usar durante o curso -->
+<!-- CursoR::instalar_dependencias() -->
+<!-- ``` -->
+
+<!-- #### Passo 2: Criar um projeto do RStudio -->
+
+<!-- Faça um projeto do RStudio para usar durante todo o curso e em seguida abra-o. -->
+
+<!-- #### Passo 3: Baixar o material -->
+
+<!-- Certifique que você está dentro do projeto criado no passo 2 e rode o código abaixo. -->
+
+<!-- OBS: Assim que rodar o código abaixo, o programa vai pedir uma escolha de opções. -->
+<!-- Escolha o número correspondente ao curso de Machine Learning com R! -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- # Baixar ou atualizar material do curso -->
+<!-- CursoR::atualizar_material() -->
+<!-- ``` -->
+
+
+## Lista de arquivos e códigos
+
+```{r, echo = FALSE}
+knitr::kable(escape = FALSE,
+  tibble::tibble(
+    slide = CursoR:::list_github_files("intro-programacao-em-r-mestre", "slides/", "\\.html"),
+    link = paste0("https://curso-r.github.io/intro-programacao-em-r-mestre/", slide)
+  ) %>%
+    mutate(
+      Slides = glue::glue("<a href='{link}'>{slide}</a>")
+    ) %>% 
+    select(Slides)
+)
+```
+
+```{r, echo = FALSE}
+knitr::kable(
+  tibble::tibble(
+    exemplo =  CursoR:::list_github_files("intro-programacao-em-r-mestre", "exemplos/", "\\.(R$)|(Rmd$)"),
+    link = paste0("https://curso-r.github.io/intro-programacao-em-r-mestre/", exemplo)
+  ) %>%
+    mutate(
+      Exemplos = glue::glue("<a href='{link}'>{exemplo}</a>")
+    ) %>% 
+    select(Exemplos)
+)
+```
+
+```{r, echo = FALSE}
+knitr::kable(
+  tibble::tibble(
+    scripts_feitos_em_aula =  CursoR:::list_github_files("202007-r4ds-1", "scripts_feitos_em_aula/", "\\.R"),
+    link = paste0("https://curso-r.github.io/202007-r4ds-1/", scripts_feitos_em_aula)
+  ) %>%
+    mutate(
+      `Scripts feitos em aula` = glue::glue("<a href='{link}'>{scripts_feitos_em_aula}</a>")
+    ) %>% 
+    select(`Scripts feitos em aula`)
+)
+```
+
+```{r, echo = FALSE}
+knitr::kable(
+  tibble::tibble(
+    exercicio = CursoR:::list_github_files("intro-programacao-em-r-mestre", "exercicios/", "\\.R"),
+    link = paste0("https://curso-r.github.io/intro-programacao-em-r-mestre/", exercicio)
+  ) %>%
+    mutate(
+      `Exercícios` = glue::glue("<a href='{link}'>{exercicio}</a>")
+    ) %>% 
+    select(`Exercícios`)
+)
+```
+
+```{r, echo = FALSE}
+knitr::kable(
+  tibble::tibble(
+    gabarito = CursoR:::list_github_files("intro-programacao-em-r-mestre", "gabaritos/", "\\.R"),
+    link = paste0("https://curso-r.github.io/intro-programacao-em-r-mestre/", gabarito)
+  ) %>%
+    mutate(
+      `Gabaritos` = glue::glue("<a href='{link}'>{gabarito}</a>")
+    ) %>% 
+    select(`Gabaritos`)
+)
+```
+
+## Referências externas
+
+#### Programação em R
+
+- [Livro da Curso-R (Curso-R)](https://livro.curso-r.com/)
+- [Tidyverse (Wickham H)](https://www.tidyverse.org/)
+- [R for Data Science (Wickham H)](https://r4ds.had.co.nz/)
+- [Advanced R (Wickham H)](https://adv-r.hadley.nz/)
+- [ggplot2: Elegant Graphics for Data Analysis (Wickham H)](https://ggplot2-book.org/)
+
+
