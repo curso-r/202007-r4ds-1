@@ -53,26 +53,29 @@
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/slides/04-manipulacao.html'>slides/04-manipulacao.html</a>                 |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/slides/05-ggplot2.html'>slides/05-ggplot2.html</a>                         |
 
-| Exemplos                                                                                                                          |
-| :-------------------------------------------------------------------------------------------------------------------------------- |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/01-introducao-ao-R.R'>exemplos/01-introducao-ao-R.R</a> |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/02-importacao.R'>exemplos/02-importacao.R</a>           |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/03-manipulacao.R'>exemplos/03-manipulacao.R</a>         |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/04-ggplot2.R'>exemplos/04-ggplot2.R</a>                 |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/05-rmarkdown.Rmd'>exemplos/05-rmarkdown.Rmd</a>         |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/06-flexdashboard.Rmd'>exemplos/06-flexdashboard.Rmd</a> |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/dicas_rapidas.R'>exemplos/dicas\_rapidas.R</a>          |
+| Exemplos                                                                                                                              |
+| :------------------------------------------------------------------------------------------------------------------------------------ |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/01-introducao-ao-R.R'>exemplos/01-introducao-ao-R.R</a>     |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/02-controle-de-fluxo.R'>exemplos/02-controle-de-fluxo.R</a> |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/03-importacao.R'>exemplos/03-importacao.R</a>               |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/04-manipulacao.R'>exemplos/04-manipulacao.R</a>             |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/05-ggplot2.R'>exemplos/05-ggplot2.R</a>                     |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/06-rmarkdown.Rmd'>exemplos/06-rmarkdown.Rmd</a>             |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/07-flexdashboard.Rmd'>exemplos/07-flexdashboard.Rmd</a>     |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/dicas_rapidas.R'>exemplos/dicas\_rapidas.R</a>              |
 
 | Scripts feitos em aula |
 | :--------------------- |
 
 | Exercícios                                                                                                                                                    |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/00-introducao-ao-R.R'>exercicios/00-introducao-ao-R.R</a>                         |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/01-criando-funcoes.R'>exercicios/01-criando-funcoes.R</a>                         |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/02-importacao-csv.R'>exercicios/02-importacao-csv.R</a>                           |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/03-manipulacao-de-dados-extras.R'>exercicios/03-manipulacao-de-dados-extras.R</a> |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/03-manipulacao-de-dados.R'>exercicios/03-manipulacao-de-dados.R</a>               |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-graficos-ggplot2.R'>exercicios/04-graficos-ggplot2.R</a>                       |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/02-importacao-nao-estruturada.R'>exercicios/02-importacao-nao-estruturada.R</a>   |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/03-importando-varias-bases.R'>exercicios/03-importando-varias-bases.R</a>         |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-manipulacao-de-dados-extras.R'>exercicios/03-manipulacao-de-dados-extras.R</a> |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-manipulacao-de-dados.R'>exercicios/03-manipulacao-de-dados.R</a>               |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/05-graficos-ggplot2.R'>exercicios/05-graficos-ggplot2.R</a>                       |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/avaliacao/06-avaliacao.R'>exercicios/avaliacao/06-avaliacao.R</a>                 |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/avaliacao/script_correcao.R'>exercicios/avaliacao/script\_correcao.R</a>          |
 
