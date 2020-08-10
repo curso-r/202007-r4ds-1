@@ -73,18 +73,20 @@
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/01-criando-funcoes.R'>exercicios/01-criando-funcoes.R</a>                         |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/02-importacao-nao-estruturada.R'>exercicios/02-importacao-nao-estruturada.R</a>   |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/03-importando-varias-bases.R'>exercicios/03-importando-varias-bases.R</a>         |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-manipulacao-de-dados-extras.R'>exercicios/03-manipulacao-de-dados-extras.R</a> |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-manipulacao-de-dados.R'>exercicios/03-manipulacao-de-dados.R</a>               |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-manipulacao-de-dados-extras.R'>exercicios/04-manipulacao-de-dados-extras.R</a> |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/04-manipulacao-de-dados.R'>exercicios/04-manipulacao-de-dados.R</a>               |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/05-graficos-ggplot2.R'>exercicios/05-graficos-ggplot2.R</a>                       |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/06-ggplot2-likert.R'>exercicios/06-ggplot2-likert.R</a>                           |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/avaliacao/06-avaliacao.R'>exercicios/avaliacao/06-avaliacao.R</a>                 |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exercicios/avaliacao/script_correcao.R'>exercicios/avaliacao/script\_correcao.R</a>          |
 
 | Gabaritos                                                                                                                                                                             |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/01-solucao-funcao-max.R'>gabaritos/01-solucao-funcao-max.R</a>                                             |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/03-correcao-exercicios-manipulacao-de-dados.R'>gabaritos/03-correcao-exercicios-manipulacao-de-dados.R</a> |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/04-solucao-imdb-nao-estruturada.R'>gabaritos/04-solucao-imdb-nao-estruturada.R</a>                         |
-| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/05-solucao_importando_varias_bases.R'>gabaritos/05-solucao\_importando\_varias\_bases.R</a>                |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/02-solucao-imdb-nao-estruturada.R'>gabaritos/02-solucao-imdb-nao-estruturada.R</a>                         |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/03-solucao_importando_varias_bases.R'>gabaritos/03-solucao\_importando\_varias\_bases.R</a>                |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/04-correcao-exercicios-manipulacao-de-dados.R'>gabaritos/04-correcao-exercicios-manipulacao-de-dados.R</a> |
+| <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/gabaritos/06-ggplot2-likert.R'>gabaritos/06-ggplot2-likert.R</a>                                                     |
 
 ## Referências externas
 
