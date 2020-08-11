@@ -314,8 +314,18 @@ diretor_por_filme_de_drama %>%
 
 # a. Faça um gráfico de barras preenchido cruzando cor e classificacao
 # dica: geom_col(position = "fill")
+imdb %>%
+  count(cor, classificacao) %>%
+  ggplot() +
+  geom_col(aes(x = n, y = cor, fill = classificacao), position = "fill")
 
 # b. adicione + scale_fill_brewer(palette = "Set3")  ao grafico
+imdb %>%
+  count(cor, classificacao) %>%
+  ggplot() +
+  geom_col(aes(x = n, y = cor, fill = classificacao), position = "fill")+
+  geom_text(aes(x = n, y = cor, fill = classificacao, label = n), position = position_fill(vjust = 0.5))+
+  scale_fill_brewer(palette = 1)
 
 # Histogramas e boxplots --------------------------------------------------
 
