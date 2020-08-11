@@ -64,8 +64,10 @@
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/07-flexdashboard.Rmd'>exemplos/07-flexdashboard.Rmd</a>     |
 | <a href='https://curso-r.github.io/intro-programacao-em-r-mestre/exemplos/dicas_rapidas.R'>exemplos/dicas\_rapidas.R</a>              |
 
-| Scripts feitos em aula |
-| :--------------------- |
+| Scripts feitos em aula                                                                                                                  |
+| :-------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href='https://curso-r.github.io/202007-r4ds-1/scripts_feitos_em_aula/05-ggplot2.R'>scripts\_feitos\_em\_aula/05-ggplot2.R</a>        |
+| <a href='https://curso-r.github.io/202007-r4ds-1/scripts_feitos_em_aula/dicas_rapidas.R'>scripts\_feitos\_em\_aula/dicas\_rapidas.R</a> |
 
 | Exercícios                                                                                                                                                    |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
