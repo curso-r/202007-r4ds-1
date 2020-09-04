@@ -1,0 +1,403 @@
+---
+title: 'Luz, câmera e ação: Uma análise exploratória da base de dados IMDb para quem
+  quer produzir um filme'
+author: "Rafael Sach"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<div style="text-align: justify">
+## Enunciado do Trabalho Final do Curso R para Ciência de Dados I
+
+Objetivo: fazer uma análise exploratória dos dados do IMDB.
+
+Contexto: imaginem que o Athos e o Fernando queiram investir na produção de um filme, mas eles não sabem nada de cinema. Eles tem interesse em produzir um filme que seja tanto um sucesso financeiro, quanto um sucesso de crítica, mas poderiam abandonar um dos critérios caso o outro seja muito atraente. Para isso, eles precisam saber quais os melhores diretores, atores e qual gênero de filme é mais propenso a uma produção de sucesso. Informações sobre duração e classificação etária também seriam interessantes para eles, assim como uma ideia do quanto eles precisariam desembolsar.
+
+## Proposta
+
+Dado o enunciado, meu objetivo será trazer informações para que eles possam fazer as melhores escolhas para investir em um filme. Para isso, vou usar a imaginação e simular que Athos e Fernando são empresários super ricos e donos e fundadores da Plataforma Global de Ensino à Distância (EAD) Curso R. 
+
+## Por que fazer um filme?
+<div/>
+<div style="text-align: justify">
+Em tempos de Instagram, TikTok e Youtubers, para muita gente, “estar na mídia” é tão ou mais importante do que ter muita grana ($$$). Não à toa os detentores do fortunas, os super ricos, têm procurado cada vez mais os serviços dos influenciadores digitais para popularizarem suas marcas e seus produtos.
+
+Enquanto a estratégia acima ainda vem se demonstrando assertiva em alguns casos, há quem diga que em um futuro próximo os consumidores não se importarão apenas com quem são os "garotos propaganda" dos produtos que querem comprar, mas também como o posicionamento social da marca e quem está por trás daquela *brand*, com a finalidade de evitar possíveis contradições entre o que dizem as empresas e o que elas realmente representam.
+
+Pensando em suas reputações e em como isso poderia influenciar seus negócios, alguns ricaços brasileiros já se valeram de seu poderio econômico e se aventuraram no campo das biografias, contando histórias que  pretendiam ser inspiradoras, cheias de superação e com pitadas motivacionais que quase faziam seres humanos normais como nós acreditarem que um dia poderíamos estar naquele pedestal também.
+
+Bom, a história já mostrou que nem tudo que reluz é ouro e biografias antes aclamadas, como a do empresário Eike Batista foram totalmente desacreditadas pelos acontecimentos que por motivos bem óbvios acabaram não populando as páginas do livro sobre a vida do empresário. Eventos como esse do ex-homem mais rico do Brasil e consumidores mais ávidos por informações em formatos que permitam mais agilidade, acabam reduzindo um pouco o mercado de livros biográficos, afinal, enquanto as pessoas são cobradas por mais produção, rapidez e eficiência, quem é que realmente tem tempo de ler um livro de 300 páginas? **(Contém ironia)**.
+
+Assim, minha dica para esses super ricaços é evitar o mercado de biografias e mergulhar no mercado de áudio visual. **Filmes!!** Isso mesmo, filmes são mais curtos do que livros, podem atingir um público muito maior, têm um poder impressionante de passar uma menssagem, criam debates e podem gerar um lucro extraordinário, principalmente em tempo de pandemias e isolamento social. Imaginem só, todo mundo em casa conectando no Netflix para assistir a mais uma bela história de meritocracia ou heroísmo de algum milionário.
+
+Prova da popularidade dos filmes é o número cada vez maior de produções que vêm sendo realizadas ao longo dos anos. A base de dados do Internet Movie Database (IMDb) com 3.713 filmes registrados de 1916 até 2016, evidencia o forte crescimento do número de filmes principalmente a partir dos anos 90.  
+<div/>
+
+```{r, include = FALSE}
+library(tidyverse)
+
+imdb <- read_rds("../dados/imdb.rds")
+
+```
+
+```{r, include = FALSE}
+imdb <- imdb %>% 
+  mutate(lucro = receita - orcamento) 
+
+```
+<br/>
+```{r, fig.align = "center", fig.cap="**Figura 1.** Curva de filmes produzidos ao longo dos anos.", echo = FALSE,message = FALSE ,warning = FALSE}
+imdb %>% 
+  group_by(ano) %>% 
+  count(titulo) %>% 
+  summarise(num_filmes = n()) %>%
+  ggplot() +
+  geom_line(aes(x = ano, y = num_filmes)) +
+  scale_y_continuous(name = "Número de Filmes Produzidos")
+```
+
+<div style="text-align: justify">
+
+Ainda que o gráfico acima demonstre uma forte queda no número de filmes produzidos a partir de 2014, isso não significa as obras cinematográficas tenham ficado fora de moda. Vale lembrar que além dos possíveis problemas com a continuidade da alimentação da base de dados que estamos analisando, foi a partir desses anos que plataformas como Amazom Prime e Netflix mudaram completamente o mercado de distribuição de filmes e tornando as películas cada vez mais acessíveis para o grande público.
+
+Apesar dos "problemas" com a base, acredito que isso não será um problema para demonstrar os benefícios de investir na produção de um filme para os milionários Athos e Fernando, fundadores da plataforma global de EAD  Curso R, focada em ciência de dados. Aliás, vale dizer que a credibilidade deles em nada se parecem com a do ex-magnata do power point citado anteriomente. Os curso oferecidos nas plataformas já formaram aproximadamente 26 mil novos cientistas de dados, portanto não seria um grande esforço para um Diretor de cinema fazer um filme com uma história sobre os dois e a Curso R.
+
+Mas chega de lero lero e vamos aos números!
+<div/>
+
+## Análise Exploratória
+
+### Gêneros
+
+Quando recebi a tarefa, as principais premissas para os contratantes eram que o filme fosse sucesso de crítica e/ou sucesso financeiro. Certamente há várias maneiras de conseguir demonstrar isso, mas vamos começar olhando para as avaliações dos filmes através das notas presentes na base IMDb. Vamos focar nossa análise no sucesso de crítica, já que entendemos que fazer um filme que passe uma mensagem positiva sobre Athos e Fernando, permitirá que o público possa conhece-los ainda mais e, consequentemente isso trará retorno financeiro através do aumento do número de pessoas interessados nos cursos da Curso R. 
+
+O gráfico a seguir nos mostra que a nota média por ano vem caindo ao longo dos anos, o que já funciona como um primeiro alerta. O público vem ficando cada vez mais crítico, isso provavelmente se deve ao fato de que com mais filmes disponíveis, mais o público vai adquirindo base comparativa, permitindo que as pessoas saibam cada vez mais do que elas realmente gostam em um filme.
+<br/>
+```{r , fig.align = "center", fig.cap="**Figura 2.** Nota média ao longo dos anos.", echo=FALSE, message = FALSE ,warning = FALSE}
+imdb %>% 
+  filter(!is.na(nota_imdb)) %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  mutate(nota_media = round(nota_media, 1)) %>% 
+  ggplot(aes(x = ano, y = nota_media)) +
+  geom_line() +
+  geom_label(aes(label = nota_media)) +
+  scale_y_continuous(name = "Nota Média IMDb")
+```
+
+Assim, como era esperado, lançar um filme nem sempre é uma garantia de sucesso. Pensando nisso, podemos começar a buscar quais caracteríscas presentes em nossa base de dados podem nos trazer alguns *insights* sobre que tipos de obras cinematográficas parecem ter mais chances de sucesso.
+<br/>
+```{r, fig.align = "center", fig.cap="**Figura 3.** Gêneros com mais produções.", echo=FALSE, message = FALSE ,warning = FALSE}
+imdb %>% 
+  count(generos) %>%
+  filter(!is.na(generos)) %>% 
+  top_n(10, n) %>%
+  mutate(
+    generos = forcats::fct_reorder(generos, n)
+  ) %>% 
+  ggplot() +
+  geom_col(
+    aes(x = generos, y = n, fill = generos),
+    show.legend = FALSE
+  ) + scale_x_discrete(name = "Gêneros") +
+  scale_y_discrete(name = "Número de Filmes") +
+  geom_label(aes(x = generos, y = n/2, label = n)) +
+  coord_flip()
+```
+<div style="text-align: justify">
+A gráfico anterior mostra quais gêneros foram mais produzidos entre os filmes de nossa base de dados. Como estamos interessados em pensar que tipo de filme poderia ser feito para falar de Athos e Fernando, o leitor pode estar fazendo o questionamento se o melhor gênero não seria um documentário. Quem pergunta isso não está errado sob o ponto de vista do paralelo que começamos a fazer com as biografias no início do texto, mas será que essa é a única maneira de contar uma história? Será que uma comédia ou um drama não poderiam contar a história dessa dupla de uma maneira mais interessante? Para responder essas perguntas vamos ver se estes genêros se destacam entre aqueles com maior nota média.
+
+<br/>
+<div/>
+<div style="text-align: center">
+**Tabela 1 - Gêneros e Nota Média**
+<div/>
+```{r , echo=FALSE, message = FALSE ,warning = FALSE}
+
+imdb %>% 
+  group_by(generos) %>%
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>%
+  top_n(10, nota_media) %>% 
+  arrange(nota_media) %>%
+  mutate(
+    pos = 11:1) %>% 
+  arrange(pos) %>%
+  select(`Posição` = pos, `Gênero` = generos, `Nota Média` = nota_media) %>% 
+  knitr::kable()
+```
+<div style="text-align: justify">
+Diferente do que foi mostrado na figura 3, onde comédia vem em primeiro lugar em números de produções feitas e drama em segundo lugar, a Tabela 1 deixa claro que filmes com mais de uma classificação de gênero possuem maior sucesso de crítica. Nesse caso, a liderança passa a ser ocupada por Ação|Drama|Romance e só voltamos a ver o gênero comédia na terceira posição. Mas a visão obtida através da tabela anterior é bem abrangente e construída utilizando todos os anos disponíveis na base.
+
+A seguir podemos ter uma idéia de como as notas médias alteram a liderança de gêneros em um olhar mais atual, ou seja, "colocando uma lupa" apenas nos anos a partir de 2000.
+<div/>
+
+<br/>
+<div style="text-align: center">
+**Tabela 2 - Gêneros e Nota Média a partir de 2000**
+<div/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE}
+
+imdb %>% 
+  filter(ano >= 2000) %>%
+  group_by(generos) %>%
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>%
+  top_n(10, nota_media) %>% 
+  arrange(nota_media) %>%
+  mutate(
+    pos = 10:1) %>% 
+  arrange(pos) %>%
+  select(`Posição` = pos, `Gênero` = generos, `Nota Média` = nota_media) %>% 
+  knitr::kable()
+```
+<div style="text-align: justify">
+Assim, olhando para primeira posição começo a imaginar um filme épico da nossa dupla lutando contra os defensores do **Python** (Ação), Athos e Fernando em sua trajetória para demonstrar que o **R** é a linguagem mais completa (Drama) e finalmente a parte do Romance, mas fiquem calmos, estou me refirando ao amor que ambos sentem por disseminar a cultura de dados e formar cada vez mais cientistas de dados.
+<div/>
+<div style="text-align: justify">
+### Atores
+<div/>
+<div style="text-align: justify">
+Como bons filmes não são determinados apenas pelo gênero, vamos tentar verificar através dos dados se de alguma maneira os atores envolvidos nas tramas ajudam a impulsionar as notas.
+
+Destacamos que a base de dados possui três colunas diferentes para atores (`ator_1`, `ator_2` e `ator_3`) sem fazer qualquer diferenciação de importância entre elas. Então, é possível que em um determinado filme a atriz X esteja na coluna `ator_2` e em outro filme ela esteja na couna `ator_3`. Como nosso objetivo é apenas fazer algumas avaliações sobre os atores, vamos trabalhar apenas com a coluna `ator_1`, mas é claro que com uma continuidade deste trabalho a análise poderá ser expandida para todas as colunas.
+<div/>
+
+<br/>
+<div style="text-align: center">
+**Tabela 3 - Atores e Nota Média**
+<div/>
+```{r , echo=FALSE, message = FALSE ,warning = FALSE, }
+imdb %>% 
+  filter(ano >= 2000) %>%
+  group_by(ator_1) %>%
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>%
+  top_n(10, nota_media) %>% 
+  arrange(nota_media) %>%
+  mutate(
+    pos = 11:1) %>% 
+  arrange(pos) %>%
+  select(`Posição` = pos, `Ator` = ator_1, `Nota Média` = nota_media) %>% 
+  knitr::kable()
+```
+<div style="text-align: justify">
+
+Se atribuirmos as notas médias do filme aos atores que participaram dele, podemos dizer pela Tabela 3 quem são os atores e atrizes com as maiores notas médias a partir do ano 2000. Por outro lado, ao comparar a referida tabela com o gráfico a seguir percebemos que as altas médias dos atores provavelmente são altas porque fizeram poucos filmes, afinal, nenhum dos atores com as médias mais altas fazem parte dos atores que participaram de um número maior de produções.
+<div/>
+<br/>
+```{r , echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap="**Figura 4.** Atores com mais filmes desde 2000."}
+imdb %>% 
+  filter(ano >= 2000) %>% 
+  count(ator_1) %>%
+  filter(!is.na(ator_1)) %>% 
+  top_n(10, n) %>%
+  mutate(
+    ator_1 = forcats::fct_reorder(ator_1, n)
+  ) %>% 
+  ggplot() +
+  geom_col(
+    aes(x = ator_1, y = n, fill = ator_1),
+    show.legend = FALSE
+  ) + scale_x_discrete(name = "Ator") +
+  scale_y_discrete(name = "Número de Filmes") +
+  geom_label(aes(x = ator_1, y = n/2, label = n)) +
+  coord_flip()
+```
+
+
+Agora que sabemos quem são os atores com mais "rodagem", vamos pegar os 5 primeiros e verificar suas notas médias em cada ano.
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap="**Figura 5.** Nota Média do ator J.K. Simmons."}
+imdb %>% 
+  filter(ator_1 == "J.K. Simmons") %>%
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  mutate(nota_media = round(nota_media, 1)) %>% 
+  ggplot(aes(x = ano, y = nota_media)) +
+  geom_line() +
+  geom_label(aes(label = nota_media)) +
+  scale_y_continuous(name = "Nota Média IMDb - J.K. Simmons")
+```
+
+Desconsiderando a estética ou considerando que alguém consiga fazer um forte trabalho de rejuvenescimento no ator, a escolha por J.K. Simmons parece interessante a medida que o gráfico mostra uma tendência de alta nas avaliações dos filmes que ele participou.
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap="**Figura 6.** Nota Média do ator Robert De Niro."}
+imdb %>% 
+  filter(ator_1 == "Robert De Niro") %>%
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  mutate(nota_media = round(nota_media, 1)) %>% 
+  ggplot(aes(x = ano, y = nota_media)) +
+  geom_line() +
+  geom_label(aes(label = nota_media)) +
+  scale_y_continuous(name = "Nota Média IMDb - Robert De Niro")
+```
+
+Por outro lado, escolher Robert De Niro para protagonizar o filme da Curso R, interpretando Athos ou Fernando não parece ser a escolha mais óbvia, uma vez que os melhores anos da carreira dele parecem ter ficado para trás como podemos vizualizar no gráfico anterior.
+
+Ainda no **Top 5 dos atores com mais filmes**, vemos atores mais jovens do que os dois primeiros portanto com mais chances de interpretarem os papéis pricipais do filme em questão:
+
+- *Matt Damon*: Astro de Jason Bourne, Perdido em Marte e Interestelar tem ótimas notas médias sendo a última 8,1 em 2015 depois de ter registrado 6,6 no ano anterior;
+
+- *Johnny Depp*: Ator principal da inesquecível saga de Piratas do Caribe vem apresentando uma tendência de nota média decrescente nos últimos anos, o que é uma pena pois talvez seja ele entre os 5 atores, aquele com mais semelhanças físicas com os fundadores da Curso R; e
+
+- *Robert Downey Jr.*: O eterno Tony Stark parece ser uma escolha mais do que certa, a última nota média foi 8,2, apresenta trajetória de notas médias ascendente e, alavancado pelo sucesso dos filmes Vingadores e Homem de Ferro, seus trabalhos têm batido *record* de bilheteria.
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap="**Figura 7.** Nota Média IMDb.", fig.width = 12}
+  
+    imdb %>% 
+    filter(ator_1 %in% c("Matt Damon", "Johnny Depp", "Robert Downey Jr.")) %>%
+    group_by(ano, ator_1) %>% 
+    summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+    mutate(nota_media = round(nota_media, 1)) %>% 
+    ggplot(aes(x = ano, y = nota_media)) +
+    geom_line() +
+    geom_label(aes(label = nota_media)) + facet_wrap(~ator_1) +
+    scale_y_continuous(name = "Nota Média IMDb") +
+    scale_x_continuous(name = "ano", minor_breaks = 1990)
+```
+
+<div style="text-align: justify">
+### Direção
+
+Não menos importante do que os atores que estampam o filme, os diretores são aqueles que dão vida a história que precisa ser contada e contar bem essa história é determinante para cativar o público. Dessa maneira, tentando olhar para trabalhos mais recentes de 2010 para frente a Tabela 4 nos mostra quem são os diretores com melhores conceitos junto ao público.
+<div/>
+<br/>
+<div style="text-align: center">
+**Tabela 4 - Diretores e Nota Média**
+<div/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE}
+
+imdb %>% 
+  filter(ano >= 2010) %>%
+  group_by(diretor) %>%
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>%
+  mutate(nota_media = round(nota_media, 1)) %>%
+  top_n(10, nota_media) %>% 
+  arrange(nota_media) %>%
+  mutate(
+    pos = 12:1) %>% 
+  arrange(pos) %>%
+  select(`Posição` = pos, `Diretor` = diretor, `Nota Média` = nota_media) %>% 
+  knitr::kable()
+
+```
+<div style="text-align: justify">
+Como podemos observar no gráfico a seguir, nem sempre foi uma boa escolha ter um filme dirigido por John Stockwell, diretor líder em nota média, conforme tabela anterior. Seus 3 primeiros filmes ficaram com notas bem abaixo da nota atual, mas aparentemente o período sabático de 2005 à 2016 fez muito bem ao diretor, pois a sua nota teve um salto considerável.
+<div/>
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap="**Figura 8.** Notas do Diretor John Stockwell."}
+
+imdb %>% 
+  filter(diretor == "John Stockwell") %>%
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  mutate(nota_media = round(nota_media, 1)) %>% 
+  ggplot(aes(x = ano, y = nota_media)) +
+  geom_line() +
+  geom_label(aes(label = nota_media)) +
+  scale_y_continuous(name = "Nota Média IMDb")
+
+```
+<div style="text-align: justify">
+### Orçamento & Retorno
+
+Agora que temos uma ideia de qual caminho seguir, vamos tentar trazer uma visão financeira para que Athos e Fernando possam decidir sobre o filme a ser feito. Obviamente que para conseguir ser mais assertivo nos resultados relacionados aos riscos financeiros do projeto, poderíamos desenvolver um  modelo de *Machine Learning* com previsão da nota IMDb ou de lucro, mas deixaremos isso para uma outra oportunidade pois não é o foco do trabalho fazer previsões e, além disso a questão financeira não é o principal foco dos sócios da Curso R, uma vez que a intenção aqui é melhorar a ainda mais a imagem deles, tendo em vista que eles só esperam que seus lucros venham exclusivamente da sua plataforma de EAD.
+
+Assim, podemos ver pelo gráfico a seguir que a grande maioria dos filmes obteve lucro, o que de certa forma pode trazer alguma tranquilidade para Athos e Fernando em evitar um grande prejuízo em busca de melhorar ainda mais a imagem de sua empresa.
+<div/>
+```{r, include = FALSE}
+imdb <- imdb %>% 
+  mutate(
+    lucrou = ifelse(lucro <= 0, "Não", "Sim")
+  )
+```
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 9.** Lucro dos Filmes na base IMDb."}
+
+imdb %>%
+  filter(!is.na(lucrou)) %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = receita, color = lucrou)) +
+  scale_x_continuous(name = "Orçamento", labels = scales::dollar, n.breaks = 4) +
+  scale_y_continuous(name = "Receita", labels = scales::dollar, n.breaks = 4)
+```
+
+Como o gráfico anterior utilizava todos os dados presentes na base, limitamos um pouco mais os anos (a partir de 2010) para ver se ainda tínhamos a mesma percepção de que a maior parte dos filmes gerou lucro, o que parece continuar acontecendo na Figura 10 a seguir, ainda que não fique tão evidente quanto na Figura 9. Além disso, adicionamos ao gráfico uma característica faixa etária dos filmes através do tamanho das circuferências, para verificar se existe algum tipo de relação linear entre a classificação etária e a receita, o que não foi possível avaliar, devido a aparente aleatoriedade desta relação, conforme o gráfico demonstrou.
+
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 10.** Lucro dos Filmes na base IMDb a partir de 2010."}
+
+imdb %>%
+  filter(ano >= 2010) %>%
+  filter(!is.na(lucrou)) %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = receita, color = lucrou, size = classificacao)) +
+  scale_x_continuous(name = "Orçamento", labels = scales::dollar, n.breaks = 4) +
+  scale_y_continuous(name = "Receita", labels = scales::dollar, n.breaks = 4)
+```
+
+Falando em relação linear, na Figura 11 em seguida substituí a característica de faixa etária por duas linhas de tendência nos dados subdivididas por lucro e não lucro, o que nos faz acreditar um pouco mais na possibilidade de lucro estar linearmente relacionada ao orçamento disponível. A grande dificuldade parece residir no fato de que quanto maior o `Orçamento`, maior é a dispersão de resultados da `Receita`o que geraria uma certa imprevisibilidade de um modelo de *Machine Learning* que poderíamos desenvolver futuramente para prever a Receita.   
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 11.** Lucro dos Filmes na base IMDb a partir de 2010."}
+imdb %>%
+  filter(ano >= 2010) %>%
+  filter(!is.na(lucrou)) %>%
+  ggplot(aes(x = orcamento, y = receita, color = lucrou)) +
+  geom_point() + geom_smooth() +
+  scale_x_continuous(name = "Orçamento", labels = scales::dollar, n.breaks = 4) +
+  scale_y_continuous(name = "Receita", labels = scales::dollar, n.breaks = 4)
+```
+
+A seguir, nas Figuras 12 e 13 tentamos trazer uma abordagem de verificar se existe algum padrão na relação entre Orçamento e Lucro e assim como nos gráficos anteriores o que fica evidente é o quanto o desvio padrão do `Lucro` fica maior a medida em que aumentamos o `Orçamento`. 
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 12.** Relação entre orçamento e Lucro dos Filmes na base IMDb."}
+imdb %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = lucro, color = lucrou)) +
+  scale_x_continuous(name = "Orçamento", labels = scales::dollar, n.breaks = 4) +
+  scale_y_continuous(name = "Lucro", labels = scales::dollar, n.breaks = 4)
+
+```
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 13.** Relação entre orçamento e Lucro dos Filmes na base IMDb a partir de 2010."}
+imdb %>%
+  filter(ano >= 2010) %>%
+  filter(!is.na(lucrou)) %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = lucro, color = lucrou)) +
+  scale_x_continuous(name = "Orçamento", labels = scales::dollar, n.breaks = 4) +
+  scale_y_continuous(name = "Lucro", labels = scales::dollar, n.breaks = 4)
+
+```
+
+A Figura 14 deixa claro que embora a gente tenha imensa dificuldade de prever a nota de um filme de baixo orçamento, pois os resultados variam bastante numa faixa entre nota 2 e 8. Por outro lado, um orçamento a partir de US$ 200 milhões parece aumentar as chances de ter no mínimo uma nota 5.  
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 14.** Orçamento x Nota IMDb."}
+imdb %>%
+  filter(!is.na(lucrou)) %>% 
+  ggplot() +
+  geom_point(aes(x = orcamento, y = nota_imdb, color = lucrou)) +
+  scale_x_continuous(name = "Orçamento", labels = scales::dollar, n.breaks = 4) +
+  scale_y_continuous(name = "Nota IMDb")
+```
+
+<div style="text-align: justify">
+Finalmente, o gráfico anterior gerou a curiosidade de verificar também a relação entre `Lucro` e `Nota IMDb` o que nos permite observar que a curva começa a apresentar uma inclinação positiva a partir da nota 6, ou seja, aumetam as chances do filme ter lucro caso tenha uma boa avaliação. O que é uma ótima notícia para Athos e Fernando porque como dissemos antes, o foco deles é uma boa avaliação da crítica.
+<div/>
+<br/>
+```{r, echo=FALSE, message = FALSE ,warning = FALSE, fig.align = "center", fig.cap = "**Figura 15.** Nota IMDb x Lucro."}
+imdb %>%
+  filter(!is.na(lucro)) %>% 
+  filter(!is.na(nota_imdb)) %>% 
+  ggplot(aes(x = nota_imdb, y = lucro), color = "blue") +
+  geom_point() + geom_smooth() +
+  scale_x_continuous(name = "Nota IMDb") +
+  scale_y_continuous(name = "Lucro", labels = scales::dollar, n.breaks = 4)
+```
+
+## Conclusão
+
+<div style="text-align: justify">
+Com os dados analisados espero ter conseguido demonstrar para Athos e Fernando da Plataforma Global de EAD - Curso R que eles estão certos em focar antes no sucesso de crítica e depois no retorno, afinal nesses novos tempos a relação entre clientes e empresas parecem ganhar cada vez mais contornos emocionais intimamente ligados ao tipo de imagem/mensagem que a empresa transmite. Além disso, ficaram dicas valiosas de quais atores e diretores poderiam alavancar o sucesso do filme da Curso R. Quem sabe daqui um tempo poderemos ver um grande filme de ação e drama sendo estrelado por Johnny Depp e Robert Downey Jr nos papéis de Athos e Fernando? Agora é esperar e ver quanto sucesso este filme fará.
+<div/>
