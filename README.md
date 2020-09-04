@@ -57,7 +57,6 @@
 | <a href='https://curso-r.github.io/202007-r4ds-1/tcc/Trabalho_Final_Rmarkdown_Marhon_Fares.html'>tcc/Trabalho\_Final\_Rmarkdown\_Marhon\_Fares.html</a> |
 | <a href='https://curso-r.github.io/202007-r4ds-1/tcc/estudio_imdb.html'>tcc/estudio\_imdb.html</a>                                                      |
 | <a href='https://curso-r.github.io/202007-r4ds-1/tcc/r4ds1_tcc_jeancarlo.html'>tcc/r4ds1\_tcc\_jeancarlo.html</a>                                       |
-| <a href='https://curso-r.github.io/202007-r4ds-1/tcc/slides_xgboost_teoria_e_passo_a_passo.pdf'>tcc/slides\_xgboost\_teoria\_e\_passo\_a\_passo.pdf</a> |
 | <a href='https://curso-r.github.io/202007-r4ds-1/tcc/tcc_cursoI_wilson.pdf'>tcc/tcc\_cursoI\_wilson.pdf</a>                                             |
 | <a href='https://curso-r.github.io/202007-r4ds-1/tcc/tcc_imdb.html'>tcc/tcc\_imdb.html</a>                                                              |
 | <a href='https://curso-r.github.io/202007-r4ds-1/tcc/tcc_tatyane.html'>tcc/tcc\_tatyane.html</a>                                                        |
