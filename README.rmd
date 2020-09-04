@@ -47,6 +47,21 @@ knitr::opts_chunk$set(
 <!-- ``` -->
 
 
+## Trabalhos de conclusão de curso
+
+```{r, echo = FALSE}
+knitr::kable(
+  tibble::tibble(
+    tcc =  CursoR:::list_github_files("202007-r4ds-1", "tcc/", "\\.(html)|(pdf)"),
+    link = paste0("https://curso-r.github.io/202007-r4ds-1/", tcc)
+  ) %>%
+    mutate(
+      `TCC` = glue::glue("<a href='{link}'>{tcc}</a>")
+    ) %>% 
+    select(`TCC`)
+)
+```
+
 ## Lista de arquivos e códigos
 
 ```{r, echo = FALSE}
