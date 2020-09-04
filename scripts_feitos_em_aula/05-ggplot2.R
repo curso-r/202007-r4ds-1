@@ -1,4 +1,4 @@
-
+# CTRL+SHIFT+O
 # Carregar pacotes --------------------------------------------------------
 
 library(tidyverse)
@@ -7,7 +7,7 @@ library(tidyverse)
 
 imdb <- read_rds("dados/imdb.rds")
 
-imdb <- imdb %>% mutate(lucro = receita - orcamento)
+imdb <- imdb %>% mutate(lucro = receita - orcamento)O
 
 # Gráfico de pontos (dispersão) -------------------------------------------
 
@@ -335,14 +335,22 @@ imdb %>%
   ggplot() +
   geom_histogram(aes(x = lucro))
 
+# CTRL+SHIFT+R
+
+# Meu novo pedaço de codigo -----------------------------------------------
+
+
+
 # Arrumando o tamanho das bases
 imdb %>%
   filter(diretor == "Steven Spielberg") %>%
   ggplot() +
   geom_histogram(
     aes(x = lucro),
-    binwidth = 100000000,
-    color = "white"
+    # binwidth = 100000000,
+    bins = 6,
+    color = "white",
+    fill = "royalblue"
   )
 
 # Boxplot do lucro dos filmes dos diretores
@@ -361,9 +369,10 @@ imdb %>%
   group_by(diretor) %>%
   filter(n() >= 15) %>%
   ungroup() %>%
-  mutate(diretor = forcats::fct_reorder(diretor, lucro, na.rm = TRUE)) %>%
+  mutate(diretor = forcats::fct_reorder(diretor, lucro, na.rm = TRUE, .fun = "median")) %>%
   ggplot() +
-  geom_boxplot(aes(x = diretor, y = lucro))
+  geom_boxplot(aes(x = lucro, y = diretor)) +
+  geom_vline(xintercept = 0, colour = "red")
 
 
 # Exercícios --------------------------------------------------------------
@@ -372,6 +381,62 @@ imdb %>%
 # dica: count() top_n()
 
 #b. Faça um boxplot do lucro dos filmes desses atores.
+
+
+
+
+#a. Descubra quais são os 5 atores que mais aparecem na coluna ator_1.
+# dica: count() top_n()
+
+top5_atores <-
+  imdb %>%
+  group_by(ator_1) %>%
+  summarise(qtde = n()) %>%
+  top_n(5)
+
+#b. Faça um boxplot do lucro dos filmes desses atores.
+# a ordem das linhas
+# a ordem dos fatores da coluna ator_1
+
+imdb %>%
+  filter(ator_1 %in% (top5_atores$ator_1)) %>%
+  mutate(
+    ator_1 = fct_reorder(ator_1, lucro, .fun = median, na.rm = TRUE)
+  ) %>%
+  arrange(lucro) %>%
+  ggplot() +
+  geom_boxplot(aes(y = ator_1, x = lucro))
+
+
+
+
+
+
+top5_atores
+
+top5_atores %>%
+  mutate(
+    ator_1 = fct_reorder(ator_1, qtde, .fun = median, na.rm = TRUE)
+  )
+
+# factor / character
+# character ---> c("a", "b", "c")
+# factor ---> c("a" = 1, "b" = 2, "c" = 3)
+# fct_reorder ---> c("a" = 2, "b" = 3, "c" = 1)
+# ordem alfabetica (padrao)
+
+# numeric / integer
+
+
+
+imdb %>%
+  count(ator_1) %>%
+  filter(!is.na(ator_1)) %>%
+  top_n(5, n) %>%
+  ggplot() +
+  geom_col(aes(x = ator_1, y = n))
+
+
 
 # Título e labels ---------------------------------------------------------
 
@@ -382,6 +447,9 @@ imdb %>%
   labs(
     x = "Orçamento ($)",
     y = "Receita ($)",
+    # alpha = ,
+    # fill = ,
+    # size = ,
     color = "Lucro ($)",
     title = "Gráfico de dispersão",
     subtitle = "Receita vs Orçamento"
@@ -404,7 +472,7 @@ imdb %>%
   geom_line(aes(x = ano, y = nota_media)) +
   scale_x_continuous(breaks = seq(1916, 2016, 10)) +
   scale_y_continuous(breaks = seq(0, 10, 2)) +
-  coord_cartesian(ylim = c(0, 10))
+  coord_cartesian(ylim = c(0, 10), xlim = c(2000, 2020))
 
 # Cores -------------------------------------------------------------------
 
@@ -419,7 +487,13 @@ imdb %>%
     stat = "identity",
     show.legend = FALSE
   ) +
-  scale_fill_manual(values = c("orange", "royalblue", "purple", "salmon", "darkred"))
+  scale_fill_manual(values = c("red", "royalblue", "purple", "salmon", "darkred"))
+  # scale_x_continuous(breaks = seq(1916, 2016, 10))
+  # scale_y_continuous(breaks = seq(0, 10, 2))
+
+
+
+
 # http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
 
 # Escolhendo pelo hexadecimal
@@ -434,7 +508,7 @@ imdb %>%
     show.legend = FALSE
   ) +
   scale_fill_manual(
-    values = c("#ff4500", "#268b07", "#ff7400", "#abefaf", "#33baba")
+    values = c("#B3403E", "#D16866", "#851311", "#C74E22", "#E67417")
   )
 
 
@@ -445,24 +519,37 @@ imdb %>%
   group_by(ano, cor) %>%
   summarise(num_filmes = n()) %>%
   ggplot() +
-  geom_line(aes(x = ano, y = num_filmes, color = cor)) +
-  scale_color_discrete(labels = c("Preto e branco", "Colorido"))
+  geom_line(aes(x = ano, y = num_filmes, color = cor))  +
+  scale_color_discrete(labels = c("Black and White" = "Preto e branco", "Color" = "Colorido"))
 
 # Definiando cores das formas geométricas
 imdb %>%
   ggplot() +
-  geom_point(mapping = aes(x = orcamento, y = receita), color = "#ff7400")
+  geom_point(mapping = aes(x = orcamento, y = receita), color = "#ff7400", size = 5)
 
 # Tema --------------------------------------------------------------------
 
 # Temas prontos
-imdb %>%
+p <- imdb %>%
   ggplot() +
   geom_point(mapping = aes(x = orcamento, y = receita)) +
   # theme_bw()
   # theme_classic()
   # theme_dark()
   theme_minimal()
+
+write_rds(p, "meu_grafico.rds")
+
+library(extrafont)
+loadfonts(device = "win")
+windowsFonts()
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point() +
+  ggtitle("Fuel Efficiency of 32 Cars") +
+  xlab("Weight (x1000 lb)") +
+  ylab("Miles per Gallon") +
+  theme(text=element_text(size=16,  family="mono"))
+
 
 # A função theme()
 imdb %>%
@@ -473,6 +560,7 @@ imdb %>%
     subtitle = "Receita vs Orçamento"
   ) +
   theme(
+    axis.title = element_text(family = "mono", colour = "red", size = 30),
     plot.title = element_text(hjust = 0.5),
     plot.subtitle = element_text(hjust = 0.5)
   )
